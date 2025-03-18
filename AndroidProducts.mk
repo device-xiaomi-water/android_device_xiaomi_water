@@ -1,14 +1,13 @@
 #
-# Copyright (C) 2024 The Android Open Source Project
-# Copyright (C) 2024 SebaUbuntu's TWRP device tree generator
+# Copyright (C) 2024 The LineageOS Project
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/twrp_water.mk
+    $(LOCAL_DIR)/lineage_water.mk
 
 COMMON_LUNCH_CHOICES := \
-    twrp_water-user \
-    twrp_water-userdebug \
-    twrp_water-eng
+    lineage_water-user \
+    lineage_water-userdebug \
+    lineage_water-eng
