@@ -14,7 +14,7 @@ BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 
 # A/B
 AB_OTA_UPDATER := true
-TARGET_OTA_ASSERT_DEVICE := water
+TARGET_OTA_ASSERT_DEVICE := water,cloud
 AB_OTA_PARTITIONS += \
     system \
     vbmeta_system \
