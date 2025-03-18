@@ -18,38 +18,12 @@
 
 LOCAL_PATH := device/xiaomi/water
 
-# Dynamic partitions
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-
-# VNDK
-PRODUCT_TARGET_VNDK_VERSION := 31
-
-# API
-PRODUCT_SHIPPING_API_LEVEL := 31
-#BOARD_SHIPPING_API_LEVEL := 30
-
-
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
 # V A/B
 ENABLE_VIRTUAL_AB := true
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
-
-# A/B
-AB_OTA_PARTITIONS += \
-    boot \
-    dtbo \
-    lk \
-    preloader \
-    product \
-    system \
-    system_ext \
-    vbmeta \
-    vbmeta_system \
-    vbmeta_vendor \
-    vendor \
-    vendor_boot
     
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -67,6 +41,12 @@ PRODUCT_PACKAGES += \
     otapreopt_script \
     checkpoint_gc
 
+# API levels
+PRODUCT_SHIPPING_API_LEVEL := 33
+
+# Dynamic partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
 # Fastbootd
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
@@ -76,46 +56,46 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
     android.hardware.health@2.1-service
-    
-# Bootctrl
+
+# Rootdir
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-mtkimpl \
-    android.hardware.boot@1.2-mtkimpl.recovery
+    init.insmod.sh \
 
-PRODUCT_PACKAGES_DEBUG += \
-    bootctrl
-
-# Treble
-BOARD_VNDK_VERSION := current
-
-# Update engine
 PRODUCT_PACKAGES += \
-    update_engine \
-    update_engine_sideload \
-    update_verifier
+    fstab.mt6765 \
+    factory_init.connectivity.common.rc \
+    factory_init.connectivity.rc \
+    factory_init.project.rc \
+    factory_init.rc \
+    init.aee.rc \
+    init.ago.rc \
+    init.cgroup.rc \
+    init.connectivity.common.rc \
+    init.connectivity.rc \
+    init.modem.rc \
+    init.mt6765.rc \
+    init.mt6765.usb.rc \
+    init.project.rc \
+    init.sensor_1_0.rc \
+    init_connectivity.rc \
+    meta_init.connectivity.common.rc \
+    meta_init.connectivity.rc \
+    meta_init.modem.rc \
+    meta_init.project.rc \
+    meta_init.rc \
+    multi_init.rc \
+    init.recovery.mt6765.rc \
 
-PRODUCT_PACKAGES_DEBUG += \
-    update_engine_client
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/fstab.mt6765:$(TARGET_VENDOR_RAMDISK_OUT)/first_stage_ramdisk/fstab.mt6765
 
-# Drm
-PRODUCT_PACKAGES += \
-    android.hardware.drm@1.4  
-
-# Mtk plpath utils
-PRODUCT_PACKAGES += \
-    mtk_plpath_utils \
-    mtk_plpath_utils.recovery
-
-# Keymaster
-PRODUCT_PACKAGES += \
-    android.hardware.keymaster@4.1
-
-# Keymint
-PRODUCT_PACKAGES += \
-    android.hardware.security.keymint \
-    android.hardware.security.secureclock \
-    android.hardware.security.sharedsecret
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(LOCAL_PATH)
 
 # Keystore2
 PRODUCT_PACKAGES += \
     android.system.keystore2
+
+# Inherit the proprietary files
+$(call inherit-product, vendor/xiaomi/water/water-vendor.mk)
